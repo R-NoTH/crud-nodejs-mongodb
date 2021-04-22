@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const app = express();
 
 // connecting to db
-mongoose.connect('mongodb://localhost:27017/crud-mongo', {useNewUrlParser: true, useUnifiedTopology: true})
-.then(db => console.log('db connecting'))
-.catch(e =>console.log(e));
-
+mongoose.connect('mongodb://localhost/', {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('db successful');
+});
 // importing routes
 const indexRoutes = require('./routes/index');
 
